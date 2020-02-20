@@ -41,8 +41,32 @@ print_words() and print_top().
 
 import sys
 
+def count_words_in_a_file(filename):
+    """helper function to count words in a file"""
+    my_dict = {}
+    with open(filename, 'r') as open_file:
+        file_contents = open_file.read()
+        list_contents = file_contents.lower().split()
+        for word in list_contents:
+            if word in my_dict:
+                my_dict[word] += 1
+            else:
+                my_dict[word] = 1
+    return my_dict
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
+def print_words(filename):
+    word_dict = count_words_in_a_file(filename)
+    sorted_words = sorted(word_dict)
+    for word in sorted_words:
+        print ('{} : {}'.format(word, word_dict[word]))
+
+
+def print_top(filename):
+    word_dict = count_words_in_a_file(filename)
+    for counter in sorted(word_dict, key=word_dict.get, reverse=True)[:10]:
+        print counter, word_dict[counter]
+
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
